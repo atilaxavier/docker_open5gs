@@ -22,6 +22,10 @@ upf:
       - addr: 2001:230:babe::1/48
         dnn: ims
         dev: ogstun2
+      - addr: 100.64.0.0/11
+        dev: ogstun
+        dnn: ota.tim.br
+      - addr: 100.96.0.0/12 ## FALLBACK SUBNET
     metrics:
       - addr: UPF_IP
         port: 9091

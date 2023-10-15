@@ -100,8 +100,9 @@ services:
     expose:
       - "8805/udp"
       - "2152/udp"
-    # ports:
-    #   - "2152:2152/udp"
+    ports:
+#      - "2152:2152/udp"
+      - "172.16.16.99:2152:2152/udp"
     networks:
       default:
         ipv4_address: ${SGWU_IP}
@@ -127,7 +128,7 @@ services:
       - "5868/sctp"
       - "8805/udp"
       - "2123/udp"
-      - "7777/tcp"
+#      - "7777/tcp"
       - "9091/tcp"
     networks:
       default:
@@ -150,11 +151,15 @@ services:
       - "2152/udp"
       - "8805/udp"
       - "9091/tcp"
+    ports:
+#      - "2152:2152/udp"
+      - "172.16.16.98:2152:2152/udp"
     cap_add:
       - NET_ADMIN
     privileged: true
     sysctls:
       - net.ipv4.ip_forward=1
+      - net.ipv6.conf.all.disable_ipv6=1
     networks:
       default:
         ipv4_address: ${UPF_IP}
@@ -187,8 +192,8 @@ services:
       - "36412/sctp"
       - "2123/udp"
       - "9091/tcp"
-    # ports:
-    #   - "36412:36412/sctp"
+    ports:
+      - "36412:36412/sctp"
     networks:
       default:
         ipv4_address: ${MME_IP}
