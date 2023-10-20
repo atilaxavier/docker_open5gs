@@ -72,13 +72,26 @@ def received_handler(pdu):
 
 	print("pdu status: %s"%pdu.status)
 	print("received_handler - Recebido - sequence: %s"%pdu.sequence)
-	print("received_handler - Recebido - de: %s ; para: %s"%((pdu.source_addr).decode(), (pdu.esme_addr)))
+	print("received_handler - Recebido - de: %s ; para: %s"%((pdu.source_addr).decode(), ((pdu.esme_addr).decode())))
 	#qsm = pdu.client.query_message(message_id = pdu.sequence, source_addr_ton = str(pdu.source_addr_ton), source_addr_npi = str(pdu.source_addr_npi), source_addr = pdu.source_addr.decode() )
 	#if (pdu.ms_availability_status == consts.SMPP_MS_AVAILABILITY_STATUS_AVAILABLE):
+	print(pdu.command) # alert_notification
+	if pdu.command == 'alert_notification':
+		#print(pdu)
+		print(pdu.ms_availability_status)
+		if pdu.ms_availability_status == consts.SMPP_MS_AVAILABILITY_STATUS_AVAILABLE:
+			try:
+				p = client.read_pdu()
+				print(p.short_message)
+			except Exception as error:
+				print(error)
+				print("An exception occurred:", type(error).__name__)
+				return
 	if pdu.command == consts.SMPP_ESME_ROK:
 		# Process received message
 		message_text = pdu.short_message
 		print("received_handler - Recebido - Mensagem: %s\n"%(message_text))
+
 
 
 def sent_handler(pdu):
